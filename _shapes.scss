@@ -1,0 +1,153 @@
+$unitSize: 20px;
+$color: #222;
+$bg: #fff;
+
+@function len($units) {
+	@return calc(#{$unitSize}*#{$units});
+}
+
+@mixin pos($x, $y) {
+	position: absolute !important;
+	left: len($x);
+	top: len($y);
+}
+
+@mixin shape($w, $h) {
+	box-sizing: border-box;
+	// background-color: #CCC; //TEMP
+	position: relative;
+	display: inline-block;
+	width: len($w);
+	height: len($h);
+	@content;
+}
+
+@mixin rectangle($w, $h) {
+	@include shape($w, $h) {
+		@content;
+	}
+}
+
+@mixin square($w){
+	@include rectangle($w, $w) {
+		@content;
+	}
+}
+
+// @mixin triangle-topLeft($w, $h) {
+// 	@include shape($w, $h);
+// 	border: 0 solid transparent;
+// 	&.animate::before {
+// 		border-bottom: len($h) solid $bg;
+// 		border-left: len($w) solid transparent;
+// 	}
+// }
+
+@mixin invertedColors() {
+	&::before {
+		background-color: $bg;
+	}
+}
+
+//-------------------------------------------
+
+@mixin animate($transition) {
+
+	&::before {
+		content: '';
+		position: absolute;
+		z-index: 2;
+		background-color: $color;
+		@content;
+	}
+
+	&.animate::before {
+		width: 100%;
+		height: 100%;
+		transition: $transition;
+	}
+}
+
+@mixin toBottom($transition) {
+	@include animate($transition) {
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		height: 0;
+		@content;
+	}
+}
+
+@mixin toTop($transition) {
+	@include animate($transition) {
+		bottom: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		height: 0;
+		@content;
+	}
+}
+
+@mixin toRight($transition) {
+	@include animate($transition) {
+		top: 0;
+		bottom: 0;
+		left: 0;
+		width: 0;
+		height: 100%;
+		@content;
+	}
+}
+
+@mixin toLeft($transition) {
+	@include animate($transition) {
+		top: 0;
+		bottom: 0;
+		right: 0;
+		width: 0;
+		height: 100%;
+		@content;
+	}
+}
+
+@mixin toBottomRight($transition) {
+	@include animate($transition) {
+		top: 0;
+		left: 0;
+		width: 0;
+		height: 0;
+		@content;
+	}
+}
+
+@mixin toBottomLeft($transition) {
+	@include animate($transition) {
+		top: 0;
+		right: 0;
+		width: 0;
+		height: 0;
+		@content;
+	}
+}
+
+@mixin toTopRight($transition) {
+	@include animate($transition) {
+		bottom: 0;
+		left: 0;
+		width: 0;
+		height: 0;
+		@content;
+	}
+}
+
+@mixin toTopLeft($transition) {
+	@include animate($transition) {
+		bottom: 0;
+		right: 0;
+		width: 0;
+		height: 0;
+		@content;
+	}
+}
