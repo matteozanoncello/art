@@ -1,0 +1,11 @@
+@mixin tablet {
+	@include media-breakpoint-down(md) {
+		@content;
+	}
+}
+
+@mixin mobile {
+	@include media-breakpoint-down(xs) {
+		@content;
+	}
+}
